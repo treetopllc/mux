@@ -189,6 +189,15 @@ func TestPath(t *testing.T) {
 			shouldMatch: true,
 		},
 		{
+			title:       "Path route with multiple patterns with subexpressions, match",
+			route:       new(Route).Path("/{v1:([0-9]){2}([a-z]){1}}/{v2:[0-9]{3}}/{v3:[0-9]{3}}"),
+			request:     newRequest("GET", "http://localhost/11a/222/333"),
+			vars:        map[string]string{"v1": "11a", "v2": "222", "v3": "333"},
+			host:        "",
+			path:        "/11a/222/333",
+			shouldMatch: true,
+		},
+		{
 			title:       "Path route with multiple patterns, URL in request does not match",
 			route:       new(Route).Path("/{v1:[0-9]{3}}/{v2:[0-9]{3}}/{v3:[0-9]{3}}"),
 			request:     newRequest("GET", "http://localhost/111/aaa/333"),
